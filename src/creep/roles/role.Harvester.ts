@@ -1,0 +1,95 @@
+import { goToRoom, isInRoom } from "creep/actions/action.goToRoom";
+import { harvest } from "creep/actions/action.harvest";
+import { store, storeNearby } from "creep/actions/action.store";
+import { StateMachine } from "creep/creepStateMachine";
+import { CreepRole } from "definitions";
+import { debugCreep } from "utils/debugCreep";
+import { getNearbyAvalibleBuffer } from "utils/positions";
+import { shuffle } from "utils/random";
+
+const CAPACITY_RCL_1 = 300;
+const CAPACITY_EXT = 50; // TODO increase value at rcl 7 + 8
+
+interface HarvesterMemory {
+	state: string
+	previousState: string | null
+	sourceId: string | null
+}
+
+const roleHarvester: CreepRole = {
+	getRoleName() { return 'harvester'; },
+
+	getBody(energyCapacity:number){
+		if (energyCapacity >= (CAPACITY_RCL_1 + (CAPACITY_EXT * 2))){
+			return [
+				MOVE, MOVE,
+				WORK, WORK,
+				CARRY, CARRY
+			]
+		}
+		return getDefaultBody();
+	},
+
+	run: function(creep){
+		const machine: StateMachine<HarvesterMemory> = {
+			initialContext: () => ({
+				state: 'HARVESTING',
+				previousState: null,
+				sourceId: null
+			}),
+			states: {
+				'HARVESTING' : {
+					tick: (context) => {
+						if (!context.sourceId){
+							context.sourceId = assignSource(creep);
+						}
+
+						if (creep.store.energy === creep.store.getCapacity()){
+							return 'STORING';
+						}
+
+						if (isInRoom(creep, creep.memory.targetRoom)){
+							harvest(creep, {
+								sourceId: context.sourceId,
+							});
+						} else {
+							goToRoom(creep, creep.memory.targetRoom);
+						}
+						return null;
+					}
+				},
+				'STORING': {
+					tick: (context) => {
+						if (creep.store.energy === 0){
+							return 'HARVESTING';
+						}
+						const buffer = getNearbyAvalibleBuffer(creep);
+						if (buffer){
+							storeNearby(creep, buffer);
+						} else {
+							if (isInRoom(creep, creep.memory.baseRoom)){
+								store(creep);
+							} else {
+								goToRoom(creep, creep.memory.baseRoom);
+							}
+						}
+						return null;
+					}
+				}
+			}
+		}
+
+	}
+}
+
+export default roleHarvester;
+
+function getDefaultBody(): BodyPartConstant[] {
+	return [WORK, CARRY, MOVE];
+}
+function assignSource(creep: Creep): any {
+	let room = Game.rooms[creep.memory.targetRoom];
+	let sources = room.find(FIND_SOURCES_ACTIVE);
+	return shuffle(sources)[0].id;
+}
+
