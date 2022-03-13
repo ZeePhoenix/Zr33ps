@@ -6,7 +6,10 @@ const finishPlans: TaskRunner = {
 		const flags = room.find(FIND_FLAGS).filter(f => f.name.includes('Site'));
 		flags.forEach(flag => {
 			if(flag.name.includes('Storage')){
-				room.createConstructionSite(flag.pos, STRUCTURE_STORAGE);
+				//@ts-ignore
+				if(room.controller?.level >= 4){
+					room.createConstructionSite(flag.pos, STRUCTURE_STORAGE);
+				}
 			} else if (flag.name.includes('Tower')){
 				room.createConstructionSite(flag.pos, STRUCTURE_TOWER);
 			} else if (flag.name.includes('Road')){

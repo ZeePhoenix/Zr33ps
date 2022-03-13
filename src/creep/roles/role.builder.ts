@@ -74,7 +74,13 @@ const roleBuilder: CreepRole = {
 						if (creep.store.energy === 0) { return 'GATHERING'; }
 						let buildingSites = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
 						if (!context.buildingSite || !Game.constructionSites[context.buildingSite]){
-							context.buildingSite = shuffle(buildingSites)[0].id;
+							// sort the list by completion progress
+							buildingSites.sort((a,b) =>{
+								const progressA = a.progressTotal - a.progress
+								const progressB = b.progressTotal - b.progress
+								return progressA - progressB;
+							})
+							context.buildingSite = buildingSites[0].id;
 						}
 						let site = Game.constructionSites[context.buildingSite]
 						if (creep.pos.getRangeTo(site) <= 3){
