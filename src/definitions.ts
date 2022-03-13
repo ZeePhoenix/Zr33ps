@@ -14,6 +14,7 @@ export type Task =
 	| { type: 'PLAN_BASE' }
 	| { type: 'BUILD_EXTENSIONS' }
 	| { type: 'BUILD_BUFFERS' }
+	| { type: 'BUILD_ROADS_TO_SOURCES' }
 
 export interface TaskProgressContext {
 	id: string;

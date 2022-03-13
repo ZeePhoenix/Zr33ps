@@ -28,3 +28,23 @@ export function storeAtPos(creep:Creep, loc:Structure){
 	}
 }
 
+
+export function getUnfilledExtension(creep:Creep): StructureExtension | null{
+	let room = creep.memory.baseRoom;
+	//@ts-ignore
+	const extensions:StructureExtension[] = Game.rooms[room]
+		.find(FIND_STRUCTURES).filter(r => r.structureType === STRUCTURE_EXTENSION &&
+			r.store.getFreeCapacity(RESOURCE_ENERGY) != 0);
+	if (extensions.length > 1){
+		const extension = extensions.sort((a,b) => {
+			let energyA = a.store.getFreeCapacity(RESOURCE_ENERGY);
+			let energyB = b.store.getFreeCapacity(RESOURCE_ENERGY);
+			return energyA - energyB;
+		})[0];
+		return extension;
+	} else if (extensions.length === 1){
+		return extensions[0];
+	} else {
+		return null;
+	}
+}
