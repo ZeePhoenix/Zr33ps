@@ -53,7 +53,7 @@ const roleBuilder: CreepRole = {
 						}
 
 						if (creep.store.energy === creep.store.getCapacity()){
-							return 'STORING';
+							return 'BUILDING';
 						}
 
 						if (isInRoom(creep, creep.memory.targetRoom)){
@@ -71,16 +71,16 @@ const roleBuilder: CreepRole = {
 				},
 				'BUILDING': {
 					tick: (context:any) => {
-						if (creep.store.getCapacity() === 0) { return 'GATHERING'; }
+						if (creep.store.energy === 0) { return 'GATHERING'; }
 						let buildingSites = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
 						if (!context.buildingSite || !Game.constructionSites[context.buildingSite]){
-							context.buildingSite = shuffle(buildingSites)[0];
+							context.buildingSite = shuffle(buildingSites)[0].id;
 						}
 						let site = Game.constructionSites[context.buildingSite]
 						if (creep.pos.getRangeTo(site) <= 3){
 							creep.build(site);
 						} else {
-							creep.moveTo(site);
+							creep.moveTo(site.pos);
 						}
 						return null;
 					}
