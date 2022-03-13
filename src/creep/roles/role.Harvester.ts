@@ -8,7 +8,9 @@ import { getNearbyAvalibleBuffer } from "utils/positions";
 import { shuffle } from "utils/random";
 
 const CAPACITY_RCL_1 = 300;
-const CAPACITY_EXT = 50; // TODO increase value at rcl 7 + 8
+const CAPACITY_EXT = 50;
+const CAPACITY_EXT_7 = 100;
+const CAPACITY_EXT_8 = 200;
 
 interface HarvesterMemory {
 	state: string

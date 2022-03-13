@@ -1,5 +1,5 @@
 export function collectStats(){
-	const totalStorage = 0; // TODO calulate the energy stored
+	const totalStorage = getTotalStorage();
 	Memory.stats = {
 		storageAmount: totalStorage,
 	gcl: {
@@ -9,3 +9,11 @@ export function collectStats(){
 	}
 	}
 }
+function getTotalStorage():number {
+	let totalStorage = 0;
+	for(let i in Game.rooms){
+		totalStorage += Game.rooms[i].energyAvailable;
+	}
+	return totalStorage;
+}
+
