@@ -2,6 +2,7 @@ import { goToRoom, isInRoom } from "creep/actions/action.goToRoom";
 import { harvest } from "creep/actions/action.harvest";
 import { runCreepStateMachine, StateMachine } from "creep/creepStateMachine";
 import { CreepRole } from "definitions";
+import { getNearbyAvalibleBuffer } from "utils/positions";
 import { shuffle } from "utils/random";
 import { assignSource } from "./role.Harvester";
 
@@ -27,13 +28,12 @@ const roleUpgrader: CreepRole = {
 			states: {
 				'GATHERING' : {
 					tick: (context:any) => {
-						// TODO implement BUFFERS
-						const room = Game.rooms[creep.memory.targetRoom];
-						let containers = room.find(FIND_STRUCTURES).filter(t => t.structureType === STRUCTURE_CONTAINER)
-						if (containers.length !== 0){
-							let container = shuffle(containers)[0];
-							if (creep.pos.getRangeTo(container) <= 2){
-								creep.withdraw(container, RESOURCE_ENERGY);
+						const buffer = getNearbyAvalibleBuffer(creep);
+						if (buffer){
+							if (creep.pos.getRangeTo(buffer) < 2){
+								creep.withdraw(buffer, RESOURCE_ENERGY);
+							} else {
+								creep.moveTo(buffer.pos);
 							}
 							if (creep.store.energy === creep.store.getCapacity()){
 								return 'UPGRADING';
@@ -41,7 +41,7 @@ const roleUpgrader: CreepRole = {
 						} else {
 							return 'HARVESTING';
 						}
-						throw new Error(`Something went wrong with ${creep.name}`);
+						return null;
 					}
 				},
 				'HARVESTING' : {
