@@ -5,10 +5,11 @@ Room.prototype.isInitialized = function () {
 	return(!!this.memory.initialized);
 }
 
+
 Room.prototype.initialize = function(){
 	// Are we the first room? -> If so mark this room as a base
 	const isFirstRoom = Object.keys(Game.rooms).length === 1
-		&& Object.values(Game.rooms)[0].name === this.name;
+	&& Object.values(Game.rooms)[0].name === this.name;
 
 	this.memory.initialized = true;
 	this.memory.role = isFirstRoom ? 'base' : 'explored';
@@ -45,36 +46,40 @@ Room.prototype.debugExploration = function(){
 			//formatSpawnPlanning(roomMeta),
 			`${roomMeta.lastExplored}`,
 		]
-	);
+		);
 
-	console.log(table);
-}
-
-Room.prototype.resetExploration = function(){
-	if (!this.memory.roleBase){
-		throw new Error(`Room ${this.name} is not a base room!`)
-	}
-	const roleBase = this.memory.roleBase as RoomBaseMemory;
-	console.log('RESETTING EXPLORATION');
-	roleBase.exploration = {
-		rooms : []
+		console.log(table);
 	}
 
-	Object.entries(Memory.rooms)
+	Room.prototype.resetExploration = function(){
+		if (!this.memory.roleBase){
+			throw new Error(`Room ${this.name} is not a base room!`)
+		}
+		const roleBase = this.memory.roleBase as RoomBaseMemory;
+		console.log('RESETTING EXPLORATION');
+		roleBase.exploration = {
+			rooms : []
+		}
+
+		Object.entries(Memory.rooms)
 		.filter(([roomName, room]) => room.role === 'explored')
 		.map(([roomName, room]) => roomName)
 		.forEach(roomName => delete Memory.rooms[roomName] );
 
-	const roomMeta = createRoomMeta(this, this);
-	roleBase.exploration.rooms.push(roomMeta);
-}
+		const roomMeta = createRoomMeta(this, this);
+		roleBase.exploration.rooms.push(roomMeta);
+	}
 
-interface Header{
-	title: string
-	length: number
-}
+	Room.prototype.addReq = function(role:string){
+		this.memory.reqs.push(role);
+	}
 
-function formatTable<E>(elements: E[], headers:Header[], formatter:(elem: E)=>string[]):string{
+	interface Header{
+		title: string
+		length: number
+	}
+
+	function formatTable<E>(elements: E[], headers:Header[], formatter:(elem: E)=>string[]):string{
 	const formattedHeaders = headers
 		.map(header => forceStringLength(header.title, header.length))
 		.join('');

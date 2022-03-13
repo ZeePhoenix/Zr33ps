@@ -11,7 +11,8 @@ const TASKS: { [type: string]: TaskRunner } = {
 	'WAIT_FOR_SPAWN': waitForSpawn,
 	'PLAN_BASE': planBase,
 	'BUILD_EXTENSIONS': buildExtensions,
-	'BUILD_BUFFERS': buildBuffers
+	'BUILD_BUFFERS': buildBuffers,
+	//'FINISH_PLANS': finishPlans,
 }
 
 export function initTask(task: Task, room: Room): TaskProgressContext {

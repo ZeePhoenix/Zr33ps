@@ -25,6 +25,7 @@ export function runCreepRole(creep:Creep){
 		if (Memory.debug.creepRoles){ creep.say(role.getRoleName()); }
 	} else {
 		console.log(`No role defined for ${creep.name}`);
+		creep.suicide();
 	}
 }
 

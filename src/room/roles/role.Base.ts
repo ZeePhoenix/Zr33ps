@@ -37,11 +37,12 @@ const RCL_EVENTS_TO_TASKS: { [key: number]: Task[] } = {
 		{ type: 'PLAN_BASE'},
 	],
 	2: [
-		{ type: 'BUILD_EXTENSIONS'},
 		{ type: 'BUILD_BUFFERS'},
+		{ type: 'BUILD_EXTENSIONS'},
 		//{ type: 'SET_CREEP_REQS', reqs: CREEP_REQUIREMENTS_ADVANCED },
 	],
 	3: [
+		//{ type: 'FINISH_PLANS' },
 		{ type: 'BUILD_EXTENSIONS'},
 	],
 	4:[

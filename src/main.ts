@@ -18,6 +18,7 @@ declare global {
 		getRole: () => RoomRole
 		debugExploration: () => void
 		resetExploration: () => void
+		addReq: (role:string) => void
 	}
 
 	interface CreepMemory{
