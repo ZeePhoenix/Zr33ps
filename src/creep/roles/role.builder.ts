@@ -90,3 +90,5 @@ const roleBuilder: CreepRole = {
 		runCreepStateMachine(creep, machine, 'roleBuilder');
 	}
 }
+
+export default roleBuilder;

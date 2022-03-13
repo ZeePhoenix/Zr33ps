@@ -1,5 +1,6 @@
 import { CreepRole } from '../../definitions';
 import roleHarvester from '../roles/role.Harvester';
+import roleBuilder from './role.builder';
 import roleUpgrader from './role.Upgrader';
 
 interface RoleLookup {
@@ -8,7 +9,8 @@ interface RoleLookup {
 
 const ROLES: RoleLookup = {
 	'harvester': roleHarvester,
-	'upgrader': roleUpgrader
+	'upgrader': roleUpgrader,
+	'builder': roleBuilder
 };
 
 export function getRole(roleName:string): CreepRole | null{

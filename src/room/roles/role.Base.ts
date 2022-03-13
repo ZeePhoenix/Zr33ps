@@ -17,6 +17,7 @@ const CREEP_REQUIREMENTS_BASIC = [
 	'upgrader',
 	'harvester',
 	'harvester',
+	'builder',
 ];
 
 const CREEP_REQUIREMENTS_ADVANCED = [
@@ -25,6 +26,7 @@ const CREEP_REQUIREMENTS_ADVANCED = [
 	'harvester',
 	'repairer',
 	'manager',
+	'builder',
 	'upgrader',
 ];
 
