@@ -67,17 +67,12 @@ function getValidPositions(room: Room){
 	// Exclude construction sites
 	const constructionSitePositions = room.find(FIND_CONSTRUCTION_SITES).map(site => site.pos);
 	// Exclude planned structures
-	// TODO make better way to sort flags
 	const buildingPlanPositions = room.find(FIND_FLAGS).map(flag => flag.pos);
-
-	// TODO fix this
-	// Supposed to exclude spaces within 2 of our sources and controller
+	// Exclude spaces within 2 of our sources and controller
 	const roomElementPositions = [
-		...room.find(FIND_SOURCES).map(source => source.pos),
-		room.controller!.pos
-	];
+		...room.find(FIND_SOURCES).map(source => source.pos), room.controller!.pos ];
 	const roomElementNearbyPositions = flatMap(roomElementPositions,
-		(pos) => getPositionsNear(pos, ROOM_ELEMENT_RESERVED_DISTANCE))[0];
+		(pos) => getPositionsNear(pos, ROOM_ELEMENT_RESERVED_DISTANCE));
 
 
 	const validPositions = createCheckerboardPositions(room, checkerboardType)
@@ -86,7 +81,7 @@ function getValidPositions(room: Room){
 			&& !isPositionIncluded(pos, structurePositions)
 			&& !isPositionIncluded(pos, constructionSitePositions)
 			&& !isPositionIncluded(pos, buildingPlanPositions)
-			//&& !isPositionIncluded(pos, roomElementNearbyPositions) //does not contain push pop?
+			&& !isPositionIncluded(pos, roomElementNearbyPositions)
 		);
 	return validPositions;
 }
