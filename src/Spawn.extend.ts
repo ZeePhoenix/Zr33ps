@@ -19,7 +19,7 @@ StructureSpawn.prototype.createEmergencyHarvester = function() {
 
 // Helper function to actually spawn the creep with all the needed arguments passed in
 function spawnCreep(spawn:StructureSpawn, body:BodyPartConstant[], role:string, baseRoom:string, targetRoom:string):ScreepsReturnCode{
-	const name = hashCode('${role}*${spawn.name}*${Game.time}');
+	const name = hashCode(`${role}*${spawn.name}*${Game.time}`);
 	const result = spawn.spawnCreep(body,name,{
 		memory: {
 			role: role,
@@ -28,7 +28,7 @@ function spawnCreep(spawn:StructureSpawn, body:BodyPartConstant[], role:string, 
 		}
 	});
 	if (result === OK){
-		console.log('Spawned new ${role}');
+		console.log(`Spawned new ${role}`);
 		//spawn.room.recordSpawntime(); // TODO
 	}
 	return result;

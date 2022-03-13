@@ -1,5 +1,5 @@
-import { createRoomMeta, RoomMeta } from './base/exploration';
-import { RoomBaseMemory } from './roles/role.Base';
+import { createRoomMeta, RoomMeta } from './room/base/exploration';
+import { RoomBaseMemory } from './room/roles/role.Base';
 
 Room.prototype.isInitialized = function () {
 	return(!!this.memory.initialized);
@@ -37,13 +37,13 @@ Room.prototype.debugExploration = function(){
 		],
 		(roomMeta) => [
 			roomMeta.name,
-			'${roomMeta.distanceFromHome}',
-			'${roomMeta.sources.length}',
+			`${roomMeta.distanceFromHome}`,
+			`${roomMeta.sources.length}`,
 			roomMeta.ownership.type,
 			formatRoomOwner(roomMeta),
 			formatRCL(roomMeta),
 			//formatSpawnPlanning(roomMeta),
-			'${roomMeta.lastExplored}',
+			`${roomMeta.lastExplored}`,
 		]
 	);
 
@@ -52,7 +52,7 @@ Room.prototype.debugExploration = function(){
 
 Room.prototype.resetExploration = function(){
 	if (!this.memory.roleBase){
-		throw new Error('Room ${this.name} is not a base room!')
+		throw new Error(`Room ${this.name} is not a base room!`)
 	}
 	const roleBase = this.memory.roleBase as RoomBaseMemory;
 	console.log('RESETTING EXPLORATION');
@@ -86,7 +86,7 @@ function formatTable<E>(elements: E[], headers:Header[], formatter:(elem: E)=>st
 				.join('');
 		})
 		.join('');
-	return '${formattedHeaders}\n${formattedRows}';
+	return `${formattedHeaders}\n${formattedRows}`;
 }
 
 function forceStringLength(input:string, length:number):string {
@@ -106,7 +106,7 @@ function formatRoomOwner(roomMeta: RoomMeta): string {
 
 function formatRCL(roomMeta: RoomMeta): string {
 	if (roomMeta.ownership.type === 'OWNED' ){
-		return '${roomMeta.ownership.rcl}';
+		return `${roomMeta.ownership.rcl}`;
 	} else {
 		return '';
 	}

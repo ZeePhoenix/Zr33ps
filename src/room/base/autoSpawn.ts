@@ -11,7 +11,7 @@ export function autoSpawn(room:Room){
 }
 
 function _autoSpawn(room:Room, spawn:StructureSpawn){
-	console.log('${room.name}: autoSpawn');
+	//console.log(`${room.name}: autoSpawn`);
 	const assignedCreeps = getAssignedCreeps(room);
 	if (assignedCreeps.length === 0){
 		// We have no creeps, spawn emergency harvester
@@ -37,7 +37,7 @@ function handleBaseReqs(room:Room, spawn:StructureSpawn, assignedCreeps:string[]
 		const body = getCreepBody(next, room);
 		spawn.spawnCreepWithRole(body, next, base, base);
 		return 'REQS_NEEDED';
-	} else { throw new Error('autoSpawn is missing definition for next role ${next}'); }
+	} else { throw new Error(`autoSpawn is missing definition for next role ${next}`); }
 }
 function getNext(room: Room, assignedCreeps: string[]): string | undefined {
 	if (assignedCreeps[0]){

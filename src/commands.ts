@@ -17,3 +17,8 @@ Creep.stringify = (creepName:string) => {
 Room.first = function(){
 	return Object.values(Game.rooms)[0];
 }
+
+Memory.debug = {
+	creepId: null,
+	creepRoles: false
+};

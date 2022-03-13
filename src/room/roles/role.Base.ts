@@ -74,7 +74,6 @@ const roleBase: RoomRole = {
 			const roleBase = room.memory.roleBase as RoomBaseMemory;
 			const roomMeta = createRoomMeta(room, room);
 			roleBase.exploration.rooms.push(roomMeta);
-
 		}
 
 		if (Game.time % 10 === 0){
@@ -95,42 +94,42 @@ export default roleBase;
 
 // Events are things that happen that we Observe (ex: RCL updating)
 export function processEvents(room: Room){
-	const roleHomeMemory = room.memory.roleHome as RoomBaseMemory;
+	const roleBaseMemory = room.memory.roleBase as RoomBaseMemory;
 
 	if (room.controller){
 		const newRcl = room.controller.level;
-		if (newRcl > roleHomeMemory.rcl) {
-			console.log('we have upgraded the room to rcl ${newRcl}');
-			roleHomeMemory.rcl = newRcl;
+		if (newRcl > roleBaseMemory.rcl) {
+			console.log(`we have upgraded the room to rcl ${newRcl}`);
+			roleBaseMemory.rcl = newRcl;
 			const tasksToEnqueue = RCL_EVENTS_TO_TASKS[newRcl] || [];
 			for (let task of tasksToEnqueue){
-				roleHomeMemory.tasks.pending.push(task);
+				roleBaseMemory.tasks.pending.push(task);
 			}
-			console.log('new tasks: ${JSON.stringify(roleHomeMemory.tasks.pending)}');
+			console.log(`new tasks: ${JSON.stringify(roleBaseMemory.tasks.pending)}`);
 		}
 	}
 }
 
 // Tasks are tasks we undertake to impact the world
 export function processTasks(room: Room){
-	const roleHomeMemory = room.memory.roleHome as RoomBaseMemory;
+	const roleBaseMemory = room.memory.roleBase as RoomBaseMemory;
 
-	if (!roleHomeMemory.tasks.inProgress && roleHomeMemory.tasks.pending.length){
-		const pendingTask = roleHomeMemory.tasks.pending.shift();
+	if (!roleBaseMemory.tasks.inProgress && roleBaseMemory.tasks.pending.length){
+		const pendingTask = roleBaseMemory.tasks.pending.shift();
 		try {
 			const context = initTask(pendingTask!, room);
-			roleHomeMemory.tasks.inProgress = context;
+			roleBaseMemory.tasks.inProgress = context;
 		} catch (err) {
 			// just drop the bad task
 		}
 	}
 
-	if (roleHomeMemory.tasks.inProgress) {
-		const isComplete = checkTaskCompletion(roleHomeMemory.tasks.inProgress, room);
+	if (roleBaseMemory.tasks.inProgress) {
+		const isComplete = checkTaskCompletion(roleBaseMemory.tasks.inProgress, room);
 		if (isComplete) {
 			console.log('Task Complete!');
 			// TODO add completed list
-			roleHomeMemory.tasks.inProgress = null;
+			roleBaseMemory.tasks.inProgress = null;
 		}
 	}
 }

@@ -1,26 +1,29 @@
+import './commands';
+import 'Room.extend';
+import 'Spawn.extend';
 import { runRoomRole } from './room/roles';
 import { runCreepRole } from './creep/roles';
 import { RoomRole, RoomHistoryItem, GlobalStats } from './definitions';
 
 declare global {
-	type RoomName = string;
+	type RoomName = string
 
 	interface Creep{
-		setRole: (role:string) => any;
+		setRole: (role:string) => any
 	}
 
 	interface Room {
-		isInitialized: () => boolean;
-		initialize: () => void;
-		getRole: () => RoomRole;
-		debugExploration: () => void;
-		resetExploration: () => void;
+		isInitialized: () => boolean
+		initialize: () => void
+		getRole: () => RoomRole
+		debugExploration: () => void
+		resetExploration: () => void
 	}
 
 	interface CreepMemory{
-		role: string;
-		baseRoom: RoomName;
-		targetRoom: RoomName;
+		role: string
+		baseRoom: RoomName
+		targetRoom: RoomName
 
 		[name:string]: any
 	}
@@ -36,18 +39,18 @@ declare global {
 	}
 
 	interface RoomMemory {
-		role: string;
-		initialized?: boolean;
-		reqs: string[];
-		history: RoomHistoryItem[];
+		role: string
+		initialized?: boolean
+		reqs: string[]
+		history: RoomHistoryItem[]
 
-		[name: string]: unknown;
+		[name: string]: unknown
 	}
 
 	interface Memory {
 		debug: {
-			creepId: string | null;
-			creepRoles: boolean;
+			creepId: string | null
+			creepRoles: boolean
 		}
 		stats: GlobalStats
 		[name:string] : any
@@ -58,24 +61,21 @@ declare global {
 		create: (roleName: string) => ScreepsReturnCode
 		createEmergencyHarvester: () => ScreepsReturnCode
 	}
+}
 
-};
-
-module.exports = {
-	loop
-};
 
 function loop(){
 	// Creep Cleanup
 	for(const creepName in Memory.creeps) {
 		if(!Game.creeps[creepName]) {
-			console.log('Deleting dead creep ${creepName}');
+			console.log(`Deleting dead creep ${creepName}`);
 			delete Memory.creeps[creepName];
 		}
 	}
 
 	for (let creepName in Game.creeps){
 		var creep = Game.creeps[creepName];
+		//console.log(`running creep:${creepName}`)
 		runCreepRole(creep);
 	}
 
@@ -87,3 +87,7 @@ function loop(){
 		runRoomRole(room);
 	}
 }
+
+module.exports = {
+	loop
+};

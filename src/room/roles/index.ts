@@ -23,7 +23,7 @@ export function runRoomRole(room:Room){
 	if (role){
 		role.run(room)
 	} else {
-		throw new Error('Role not defined for room ${room.name}')
+		throw new Error(`Role not defined for room ${room.name}`)
 	}
 
 	if (Game.time % HISTORY_TICKS === 0){

@@ -13,8 +13,8 @@ const TASKS: { [type: string]: TaskRunner } = {
 }
 
 export function initTask(task: Task, room: Room): TaskProgressContext {
-	console.log('Time to process task: ${JSON.stringify(task)}');
-	const id = hashCode('task*$(task.type)*$(Game.time)');
+	console.log(`Time to process task: ${JSON.stringify(task)}`);
+	const id = hashCode(`task*$(task.type)*$(Game.time)`);
 	const context: TaskProgressContext = {
 		id,
 		task,
@@ -23,7 +23,7 @@ export function initTask(task: Task, room: Room): TaskProgressContext {
 
 	const taskRunner = getTaskRunner(task.type);
 	if (!taskRunner){
-		throw new Error('No runner defined for task ${task.type}');
+		throw new Error(`No runner defined for task ${task.type}`);
 	}
 	taskRunner.init(context, room);
 
@@ -34,7 +34,7 @@ export function checkTaskCompletion(context: TaskProgressContext, room: Room): b
 	//console.log('checking task completion ${JSON.stringify(context)}');
 	const taskRunner = getTaskRunner(context.task.type);
 	if (!taskRunner){
-		throw new Error('No runner defined for task ${context.task.type}');
+		throw new Error(`No runner defined for task ${context.task.type}`);
 	}
 	if (taskRunner.delayCheck && Game.time === context.startTick){ return false; }
 

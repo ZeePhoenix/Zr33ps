@@ -1,7 +1,7 @@
 import { goToRoom, isInRoom } from "creep/actions/action.goToRoom";
 import { harvest } from "creep/actions/action.harvest";
 import { store, storeNearby } from "creep/actions/action.store";
-import { StateMachine } from "creep/creepStateMachine";
+import { runCreepStateMachine, StateMachine } from "creep/creepStateMachine";
 import { CreepRole } from "definitions";
 import { debugCreep } from "utils/debugCreep";
 import { getNearbyAvalibleBuffer } from "utils/positions";
@@ -78,7 +78,7 @@ const roleHarvester: CreepRole = {
 				}
 			}
 		}
-
+		runCreepStateMachine(creep, machine, 'roleHarvester');
 	}
 }
 

@@ -1,6 +1,6 @@
 import { debugCreep } from '../utils/debugCreep';
 import { PathFinderGoal } from '../definitions';
-import { isBuffer } from '../utils/typeGuard';
+//import { isBuffer } from '../utils/typeGuard';
 
 export function isAdjacent(pos1: RoomPosition, pos2: RoomPosition): boolean{
 	return isWithinRange(pos1, pos2, 1);
