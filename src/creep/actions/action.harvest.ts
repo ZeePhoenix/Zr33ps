@@ -18,31 +18,18 @@ const DEFAULT_OPTIONS: HarvestOptions = {
 	assign: false
 };
 
-export function harvest(creep: Creep, options: HarvestOptions = {}){
-	options = {
-		...DEFAULT_OPTIONS,
-		...options
-	};
-
-	if (options.enteringAction || !creep.memory.actionHarvest) {
+export function harvest(creep: Creep, passedSource?:string){
+	if (!creep.memory.actionHarvest) {
 		const newContext: HarvestMemory = {
 			sourceId: null,
 			blockedTicks: 0
 		};
+		creep.memory.actionHarvest = newContext;
 	}
 	const context: HarvestMemory = creep.memory.actionHarvest;
-
 	let target: Source | null = null;
 
-	// Try loading target from options
-	if (options.sourceId){
-		const found = Game.getObjectById<Source>(options.sourceId);
-		if(found){
-			target = found;
-			context.sourceId = target.id;
-		}
-	}
-
+	if (passedSource !== undefined) { context.sourceId = passedSource; }
 	// Try loading target from previous state
 	if(!target && context.sourceId){
 		const found = Game.getObjectById<Source>(context.sourceId);

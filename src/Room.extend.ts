@@ -18,10 +18,10 @@ Room.prototype.initialize = function(){
 
 Room.prototype.debugExploration = function(){
 	if (!this.memory.roleBase){
-		throw new Error('Room ${this.name} is not a base room!')
+		throw new Error(`Room ${this.name} is not a base room!`)
 	}
 	const roleBase = this.memory.roleBase as RoomBaseMemory;
-	console.log('Room ${this.name} exploration:');
+	console.log(`Room ${this.name} exploration:`);
 
 	const table = formatTable(
 		roleBase.exploration.rooms,

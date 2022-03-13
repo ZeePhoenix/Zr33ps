@@ -7,7 +7,7 @@ interface goToRoomOptions {
 // TODO 1:18:40 starting on combat
 
 export function isInRoom(creep: Creep, targetRoom: string): boolean{
-	throw new Error('Function not implemented');
+	return (creep.room.name === targetRoom);
 }
 // goToRoom
 export function goToRoom(creep: Creep, targetRoom: string){

@@ -39,7 +39,7 @@ const roleHarvester: CreepRole = {
 			}),
 			states: {
 				'HARVESTING' : {
-					tick: (context) => {
+					tick: (context:any) => {
 						if (!context.sourceId){
 							context.sourceId = assignSource(creep);
 						}
@@ -49,9 +49,12 @@ const roleHarvester: CreepRole = {
 						}
 
 						if (isInRoom(creep, creep.memory.targetRoom)){
-							harvest(creep, {
-								sourceId: context.sourceId,
-							});
+							if (context.sourceId) {
+								harvest(creep, context.sourceId);
+							} else {
+								harvest(creep);
+							}
+
 						} else {
 							goToRoom(creep, creep.memory.targetRoom);
 						}
@@ -59,19 +62,14 @@ const roleHarvester: CreepRole = {
 					}
 				},
 				'STORING': {
-					tick: (context) => {
+					tick: (context:any) => {
 						if (creep.store.energy === 0){
 							return 'HARVESTING';
 						}
-						const buffer = getNearbyAvalibleBuffer(creep);
-						if (buffer){
-							storeNearby(creep, buffer);
+						if (isInRoom(creep, creep.memory.baseRoom)){
+							store(creep);
 						} else {
-							if (isInRoom(creep, creep.memory.baseRoom)){
-								store(creep);
-							} else {
-								goToRoom(creep, creep.memory.baseRoom);
-							}
+							goToRoom(creep, creep.memory.baseRoom);
 						}
 						return null;
 					}
