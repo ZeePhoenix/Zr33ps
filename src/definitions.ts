@@ -13,6 +13,7 @@ export type Task =
 	| { type: 'WAIT_FOR_SPAWN' } // task only required in the SIM
 	| { type: 'PLAN_BASE' }
 	| { type: 'BUILD_EXTENSIONS' }
+	| { type: 'BUILD_BUFFERS' }
 
 export interface TaskProgressContext {
 	id: string;

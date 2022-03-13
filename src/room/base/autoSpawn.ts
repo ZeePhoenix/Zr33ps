@@ -49,7 +49,7 @@ function getAssignedCreeps(room: Room): string[] {
 	let roomCreeps = Array.from(room.find(FIND_MY_CREEPS), creep => creep.memory.role);
 	let requirements = [...room.memory.reqs];
 	let assignedCreeps:string[] = [];
-	console.log(`room:${JSON.stringify(roomCreeps)} reqs:${JSON.stringify(requirements)}`)
+	//console.log(`room:${JSON.stringify(roomCreeps)} reqs:${JSON.stringify(requirements)}`)
 	if (roomCreeps.length < requirements.length){
 		requirements.forEach(creep => {
 			const count = requirements.filter(x => x === creep).length
@@ -58,7 +58,7 @@ function getAssignedCreeps(room: Room): string[] {
 				assignedCreeps.push(creep);
 			}
 		});
-		console.log(`Assigned: ${JSON.stringify(assignedCreeps)}`)
+		//console.log(`Assigned: ${JSON.stringify(assignedCreeps)}`)
 	}
 	return assignedCreeps;
 }

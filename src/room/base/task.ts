@@ -1,5 +1,6 @@
 import { Task, TaskRunner, TaskProgressContext } from "definitions";
 import { hashCode } from "utils/hashCode";
+import buildBuffers from "./tasks/buildBuffers";
 import buildExtensions from "./tasks/buildExtensions";
 import planBase from "./tasks/planBase";
 import setCreepReqs from "./tasks/setCreepReqs";
@@ -9,7 +10,8 @@ const TASKS: { [type: string]: TaskRunner } = {
 	'SET_CREEP_REQS': setCreepReqs,
 	'WAIT_FOR_SPAWN': waitForSpawn,
 	'PLAN_BASE': planBase,
-	'BUILD_EXTENSIONS': buildExtensions
+	'BUILD_EXTENSIONS': buildExtensions,
+	'BUILD_BUFFERS': buildBuffers
 }
 
 export function initTask(task: Task, room: Room): TaskProgressContext {
