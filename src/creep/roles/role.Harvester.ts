@@ -85,7 +85,7 @@ export default roleHarvester;
 function getDefaultBody(): BodyPartConstant[] {
 	return [WORK, CARRY, MOVE];
 }
-function assignSource(creep: Creep): any {
+export function assignSource(creep: Creep): any {
 	let room = Game.rooms[creep.memory.targetRoom];
 	let sources = room.find(FIND_SOURCES_ACTIVE);
 	return shuffle(sources)[0].id;
