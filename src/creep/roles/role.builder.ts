@@ -16,8 +16,14 @@ interface BuilderMemory {
 const roleBuilder: CreepRole = {
 	getRoleName() { return 'builder' },
 	getBody: function (energyCapacity: number): BodyPartConstant[] {
-		// TODO better body building code
-		return [ WORK, CARRY, MOVE ];
+		const cycles = Math.floor(energyCapacity / 200);
+		let body:BodyPartConstant[] = [];
+		for (let i = 0; i < cycles; i++){
+			body.push(WORK);
+			body.push(CARRY);
+			body.push(MOVE);
+		}
+		return body;
 	},
 	run: function (creep: Creep) {
 		const machine:StateMachine<BuilderMemory> = {

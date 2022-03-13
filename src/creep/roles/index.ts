@@ -30,6 +30,5 @@ export function runCreepRole(creep:Creep){
 }
 
 export function getCreepBody(role:string, room:Room): BodyPartConstant[]{
-	// TODO make this more programatic
-	return [WORK, CARRY, MOVE];
+	return getRole(role)!.getBody(room.energyCapacityAvailable);
 }
