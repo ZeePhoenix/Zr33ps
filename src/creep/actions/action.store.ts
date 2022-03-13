@@ -19,3 +19,12 @@ export function store(creep:Creep){
 
 }
 
+export function storeAtPos(creep:Creep, loc:Structure){
+	let range = creep.pos.getRangeTo(loc);
+	if (range < 2){
+		creep.transfer(loc, RESOURCE_ENERGY);
+	} else {
+		creep.moveTo(loc);
+	}
+}
+

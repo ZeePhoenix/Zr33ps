@@ -1,6 +1,6 @@
 import { goToRoom, isInRoom } from "creep/actions/action.goToRoom";
 import { harvest } from "creep/actions/action.harvest";
-import { store, storeNearby } from "creep/actions/action.store";
+import { store, storeAtPos, storeNearby } from "creep/actions/action.store";
 import { runCreepStateMachine, StateMachine } from "creep/creepStateMachine";
 import { CreepRole } from "definitions";
 import { debugCreep } from "utils/debugCreep";
@@ -72,11 +72,25 @@ const roleHarvester: CreepRole = {
 						if (buffer){
 							storeNearby(creep, buffer);
 						}else {
-							if (isInRoom(creep, creep.memory.baseRoom)){
-								store(creep);
-								return 'HARVESTING';
+							// check for extensions
+							let room = creep.memory.baseRoom;
+							// @ts-ignore
+							const extensions:StructureExtension[] = Game.rooms[room]
+								.find(FIND_STRUCTURES).filter(r => r.structureType === STRUCTURE_EXTENSION);
+							if (extensions.length > 0){
+								const extension = extensions.sort((a,b) => {
+									let energyA = a.store.getFreeCapacity(RESOURCE_ENERGY);
+									let energyB = b.store.getFreeCapacity(RESOURCE_ENERGY);
+									return energyA - energyB;
+								})[0];
+								storeAtPos(creep, extension)
 							} else {
-								goToRoom(creep, creep.memory.baseRoom);
+								if (isInRoom(creep, room)){
+									store(creep);
+									return 'HARVESTING';
+								} else {
+									goToRoom(creep, room);
+								}
 							}
 						}
 						return null;
