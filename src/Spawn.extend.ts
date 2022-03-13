@@ -28,7 +28,7 @@ function spawnCreepFilled(spawn:StructureSpawn, body:BodyPartConstant[], role:st
 		}
 	});
 	if (result === OK){
-		console.log(`Spawned new ${role}`);
+		//console.log(`Spawned new ${role}`);
 		//spawn.room.recordSpawntime(); // TODO
 	}
 	return result;

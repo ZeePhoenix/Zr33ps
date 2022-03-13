@@ -68,6 +68,7 @@ const roleHarvester: CreepRole = {
 						}
 						if (isInRoom(creep, creep.memory.baseRoom)){
 							store(creep);
+							return 'HARVESTING';
 						} else {
 							goToRoom(creep, creep.memory.baseRoom);
 						}

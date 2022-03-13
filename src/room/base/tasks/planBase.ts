@@ -49,10 +49,10 @@ function relativePosition(pos: RoomPosition, offset: Offset){
 function placeBuildingPlanFlag(room: Room, pos: RoomPosition, type: BuildingPlanType){
 	switch (type){
 		case 'STORAGE':
-			room.createFlag(pos, 'StorageSite${Math.random()}', COLOR_BLUE);
+			room.createFlag(pos, `StorageSite*${Math.random()}`, COLOR_BLUE);
 		case 'TOWER':
-			room.createFlag(pos, 'StorageSite${Math.random()}', COLOR_ORANGE);
+			room.createFlag(pos, `TowerSite*${Math.random()}`, COLOR_ORANGE);
 		case 'ROAD':
-			room.createFlag(pos, 'StorageSite${Math.random()}', COLOR_GREY);
+			room.createFlag(pos, `RoadSite*${Math.random()}`, COLOR_GREY);
 	}
 }

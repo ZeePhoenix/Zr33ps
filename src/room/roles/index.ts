@@ -26,7 +26,7 @@ export function runRoomRole(room:Room){
 		throw new Error(`Role not defined for room ${room.name}`)
 	}
 
-	if (Game.time % HISTORY_TICKS === 0){
+	if (Game.time % HISTORY_TICKS === 1){
 		updateRoomHistory(room);
 	}
 }

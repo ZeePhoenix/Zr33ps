@@ -38,7 +38,7 @@ const buildExtensions: TaskRunner = {
 			console.log('Planning Extension');
 			const extensionPos = sortedPositions[i];
 			if (DRY_RUN){
-				room.createFlag(extensionPos, 'Free Extension+${Math.randon()}');
+				room.createFlag(extensionPos, `Free Extension+${Math.random()}`);
 			} else {
 				room.createConstructionSite(extensionPos, STRUCTURE_EXTENSION)
 			}

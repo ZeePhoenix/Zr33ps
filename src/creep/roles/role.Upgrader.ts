@@ -76,7 +76,6 @@ const roleUpgrader: CreepRole = {
 							if (creep.room.controller){
 								if (creep.pos.getRangeTo(creep.room.controller) <= 2){
 									creep.transfer(creep.room.controller, RESOURCE_ENERGY);
-									return 'GATHERING';
 								} else {
 									creep.moveTo(creep.room.controller);
 									return null;

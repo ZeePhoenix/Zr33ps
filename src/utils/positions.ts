@@ -55,7 +55,7 @@ export function getClosestToCreep<T extends AnyStructure | Creep>(creep: Creep, 
 	} {
 		const position = result.path[result.path.length-1];
 		const closestObject = objects.find(o=> isAdjacent(o.pos, creep.pos)) || null;
-		debugCreep(creep, 'chose ${closestObject ? closestObject.id : null}');
+		debugCreep(creep, `chose ${closestObject ? closestObject.id : null}`);
 		return closestObject;
 	}
 }
