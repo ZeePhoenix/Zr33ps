@@ -66,11 +66,16 @@ const roleHarvester: CreepRole = {
 						if (creep.store.energy === 0){
 							return 'HARVESTING';
 						}
-						if (isInRoom(creep, creep.memory.baseRoom)){
-							store(creep);
-							return 'HARVESTING';
-						} else {
-							goToRoom(creep, creep.memory.baseRoom);
+						const buffer = getNearbyAvalibleBuffer(creep)
+						if (buffer){
+							storeNearby(creep, buffer);
+						}else {
+							if (isInRoom(creep, creep.memory.baseRoom)){
+								store(creep);
+								return 'HARVESTING';
+							} else {
+								goToRoom(creep, creep.memory.baseRoom);
+							}
 						}
 						return null;
 					}

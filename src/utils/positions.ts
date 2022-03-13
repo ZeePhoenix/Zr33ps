@@ -1,5 +1,6 @@
 import { debugCreep } from '../utils/debugCreep';
 import { PathFinderGoal } from '../definitions';
+import { isBuffer } from './typeGuard';
 //import { isBuffer } from '../utils/typeGuard';
 
 export function isAdjacent(pos1: RoomPosition, pos2: RoomPosition): boolean{
@@ -96,7 +97,8 @@ export const sortByDistanceTo = (targetPos: RoomPosition) => (a: RoomPosition, b
 
 export function getNearbyAvalibleBuffer(creep:Creep): StructureContainer{
 	// Get all containers in same room as creep
-	// Filter containers for a buffer
-	// return closest buffer to creep
-	throw new Error('Function not implemented');
+	let buffers = creep.room.find(FIND_STRUCTURES).filter(x => x.structureType === STRUCTURE_CONTAINER && isBuffer(x));
+	buffers.sort((a,b) => a.pos.getRangeTo(creep.pos) - b.pos.getRangeTo(creep.pos));
+	//@ts-ignore
+	return buffers[0];
 }
