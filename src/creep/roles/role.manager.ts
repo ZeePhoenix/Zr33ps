@@ -12,7 +12,7 @@ const roleManager: CreepRole = {
 	getRoleName() { return 'manager' },
 	getBody(energyCapacity:number) {
 		let body:BodyPartConstant[] = [];
-		for (let i=0; i<Math.floor(energyCapacity/100) i++){
+		for (let i=0; i<Math.floor(energyCapacity/100); i++){
 			body.push(MOVE);
 			body.push(CARRY);
 		}

@@ -22,12 +22,12 @@ const CREEP_REQUIREMENTS_BASIC = [
 
 const CREEP_REQUIREMENTS_ADVANCED = [
 	'harvester',
-	'upgrader',
 	'harvester',
+	'upgrader',
+	'upgrader',
 	'repairer',
 	'manager',
 	'builder',
-	'upgrader',
 ];
 
 const RCL_EVENTS_TO_TASKS: { [key: number]: Task[] } = {
@@ -40,7 +40,7 @@ const RCL_EVENTS_TO_TASKS: { [key: number]: Task[] } = {
 		{ type: 'BUILD_BUFFERS'},
 		{ type: 'BUILD_ROADS_TO_SOURCES' }, //TODO - make build roads adaptable
 		{ type: 'BUILD_EXTENSIONS'},
-		//{ type: 'SET_CREEP_REQS', reqs: CREEP_REQUIREMENTS_ADVANCED },
+		{ type: 'SET_CREEP_REQS', reqs: CREEP_REQUIREMENTS_ADVANCED },
 	],
 	3: [
 		//{ type: 'FINISH_PLANS' },
