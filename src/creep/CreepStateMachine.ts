@@ -2,19 +2,23 @@ import { getRole } from "./roles";
 
 export interface StateMachine<T> {
 	initialContext: any
-	states: State
+	states: any
 }
 
 export function runCreepStateMachine(creep:Creep, machine:StateMachine<StateContext>, creepRole:string){
-	// Store the previous state
-	machine.initialContext.previousState = machine.initialContext.state;
-	// run the state
-	let result = machine.initialContext.state.tick(machine.initialContext);
-	if (result !== null){
-		// store the new state
-		machine.initialContext.state = result;
+	if (!creep.memory.context){
+		creep.memory.context = machine.initialContext();
 	}
+	let context = creep.memory.context;
+	context.previousState = context.state;
+	// run the current state
+	let result = machine.states[context.state].tick(context);
+	if (result !== null){
+		context.state = result;
+	}
+
 }
+
 
 interface StateContext{
 	state: string;
@@ -22,12 +26,3 @@ interface StateContext{
 	[name:string]: any
 }
 
-export type State =
-	| {'HARVESTING' : TICK}
-	| {'STORING': TICK}
-	| {'WAITING': TICK}
-	| {'EXPLORING': TICK}
-
-interface TICK {
-	tick: (context: StateContext) => string | null
-}
