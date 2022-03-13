@@ -5,7 +5,7 @@ export function updateRoomHistory(room:Room){
 	}
 	room.memory.history.push({
 		time: Game.time,
-		realTime: `${new Date().toLocaleTimeString()}`,
+		realTime: `${new Date( new Date().getTime() + -4 * 3600 * 1000).toUTCString().replace( / GMT$/, "" )}`,
 		controllerLevel: room.controller.level,
 		controllerProgress: room.controller.progress,
 		controllerProgressTotal: room.controller.progressTotal,
