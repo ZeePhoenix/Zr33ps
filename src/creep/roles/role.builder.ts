@@ -39,7 +39,7 @@ const roleBuilder: CreepRole = {
 						if (creep.store.energy === creep.store.getCapacity()){
 							return 'BUILDING';
 						}
-						const buffer = getNearbyAvalibleBuffer(creep);
+						const buffer = getNearbyAvalibleBuffer(creep, false);
 						if (buffer){
 							if(creep.pos.getRangeTo(buffer.pos) < 2){
 								creep.withdraw(buffer, RESOURCE_ENERGY);

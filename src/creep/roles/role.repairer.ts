@@ -27,7 +27,7 @@ const roleRepairer:CreepRole = {
 			states: {
 				'GATHERING' : {
 					tick: (context:any) => {
-						const buffer = getNearbyAvalibleBuffer(creep);
+						const buffer = getNearbyAvalibleBuffer(creep, false);
 						if (buffer){
 							// TODO this could be a helper
 							if (creep.pos.getRangeTo(buffer) < 2){
@@ -46,19 +46,20 @@ const roleRepairer:CreepRole = {
 				'REPAIRING': {
 					tick: (context:any) => {
 						const room = Game.rooms[creep.memory.baseRoom];
-						const repairsList = room.find(FIND_MY_STRUCTURES)
+						const repairsList = room.find(FIND_STRUCTURES)
 							.filter(s => (s.structureType !== STRUCTURE_CONTROLLER
-							&& s.hitsMax < s.hits));
+							&& s.hits < s.hitsMax));
 						repairsList.sort((a,b) => {
-							return (a.hitsMax - a.hits) - (b.hitsMax - b.hits);
+							return (b.hitsMax - b.hits) - (a.hitsMax - a.hits);
 						});
-
+						//console.log(`${JSON.stringify(repairsList)}`);
 						let target = repairsList[0];
-
-						if (creep.pos.getRangeTo(target.pos) <= 3 ){
-							creep.repair(target);
-						} else {
-							creep.moveTo(target.pos);
+						if (target){
+							if (creep.pos.getRangeTo(target.pos) <= 3 ){
+								creep.repair(target);
+							} else {
+								creep.moveTo(target.pos);
+							}
 						}
 
 						if (creep.store.energy === 0){

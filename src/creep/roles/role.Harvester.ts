@@ -68,9 +68,10 @@ const roleHarvester: CreepRole = {
 						if (creep.store.energy === 0){
 							return 'HARVESTING';
 						}
-						const buffer = getNearbyAvalibleBuffer(creep)
+						const buffer = getNearbyAvalibleBuffer(creep, true);
 						if (buffer){
-							storeNearby(creep, buffer);
+							//storeNearby(creep, buffer); // TODO FIX
+							storeAtPos(creep, buffer);
 						}else {
 							let room = creep.memory.baseRoom;
 							// check for extensions
@@ -103,6 +104,26 @@ function getDefaultBody(): BodyPartConstant[] {
 export function assignSource(creep: Creep): any {
 	let room = Game.rooms[creep.memory.targetRoom];
 	let sources = room.find(FIND_SOURCES_ACTIVE);
-	return shuffle(sources)[0].id;
+	let harvesters = room.find(FIND_MY_CREEPS).filter(creep => creep.memory.role === 'harvester');
+	if (harvesters.length > 1){
+		let tryBalanace = null;
+		sources.forEach(source => {
+			harvesters.forEach(harvester => {
+				if (creep.id !== harvester.id){
+					if (source.pos.getRangeTo(harvester) > 2){
+						tryBalanace = source;
+					}
+				}
+			});
+		});
+		if (tryBalanace !== null){
+			//@ts-ignore
+			return tryBalanace.id;
+		} else {
+			return shuffle(sources)[0].id;
+		}
+	} else {
+		return shuffle(sources)[0].id;
+	}
 }
 

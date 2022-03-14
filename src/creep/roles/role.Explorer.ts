@@ -25,7 +25,7 @@ const roleExplorer: CreepRole = {
 			}),
 			states: {
 				'WAITING': {
-					tick: (context) => {
+					tick: (context:any) => {
 						if (context.roomQueue.length) {
 							return 'EXPLORING';
 						}
@@ -33,14 +33,14 @@ const roleExplorer: CreepRole = {
 					}
 				},
 				'EXPLORING': {
-					tick: (context) => {
+					tick: (context:any) => {
 						if (context.roomQueue.length === 0){
 							return 'WAITING';
 						}
 
 						const targetRoom = context.roomQueue[0];
 						if (isInRoom(creep,targetRoom)){
-							console.log('  Shifting room from queue: ${context.roomQueue.shift()}');
+							console.log(`Shifting room from queue: ${context.roomQueue.shift()}`);
 						} else {
 							goToRoom(creep, targetRoom);
 						}

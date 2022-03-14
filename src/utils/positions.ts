@@ -95,9 +95,14 @@ export const sortByDistanceTo = (targetPos: RoomPosition) => (a: RoomPosition, b
 	return distanceA - distanceB;
 };
 
-export function getNearbyAvalibleBuffer(creep:Creep): StructureContainer{
+export function getNearbyAvalibleBuffer(creep:Creep, includeEmpty:boolean): StructureContainer{
 	// Get all containers in same room as creep
-	let buffers = creep.room.find(FIND_STRUCTURES).filter(x => x.structureType === STRUCTURE_CONTAINER && isBuffer(x));
+	let buffers:AnyStructure[] = [];
+	if (includeEmpty){
+		buffers = creep.room.find(FIND_STRUCTURES).filter(x => x.structureType === STRUCTURE_CONTAINER && isBuffer(x));
+	} else {
+		buffers = creep.room.find(FIND_STRUCTURES).filter(x => x.structureType === STRUCTURE_CONTAINER && isBuffer(x) && x.store.energy > 0);
+	}
 	buffers.sort((a,b) => a.pos.getRangeTo(creep.pos) - b.pos.getRangeTo(creep.pos));
 	//@ts-ignore
 	return buffers[0];

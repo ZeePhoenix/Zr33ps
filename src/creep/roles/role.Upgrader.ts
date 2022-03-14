@@ -28,7 +28,7 @@ const roleUpgrader: CreepRole = {
 			states: {
 				'GATHERING' : {
 					tick: (context:any) => {
-						const buffer = getNearbyAvalibleBuffer(creep);
+						const buffer = getNearbyAvalibleBuffer(creep, false);
 						if (buffer){
 							if (creep.pos.getRangeTo(buffer) < 2){
 								creep.withdraw(buffer, RESOURCE_ENERGY);

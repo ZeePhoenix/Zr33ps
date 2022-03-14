@@ -12,7 +12,8 @@ const roleManager: CreepRole = {
 	getRoleName() { return 'manager' },
 	getBody(energyCapacity:number) {
 		let body:BodyPartConstant[] = [];
-		for (let i=0; i<Math.floor(energyCapacity/100); i++){
+		for (let i=0; i<Math.floor(energyCapacity/150); i++){
+			body.push(MOVE);
 			body.push(MOVE);
 			body.push(CARRY);
 		}
@@ -27,7 +28,7 @@ const roleManager: CreepRole = {
 			states: {
 				'GATHERING':{
 					tick: (context:any) => {
-						const buffer = getNearbyAvalibleBuffer(creep);
+						const buffer = getNearbyAvalibleBuffer(creep, false);
 						if (buffer){
 							if (creep.pos.getRangeTo(buffer) < 2){
 								creep.withdraw(buffer,RESOURCE_ENERGY);
@@ -35,7 +36,7 @@ const roleManager: CreepRole = {
 								creep.moveTo(buffer.pos);
 							}
 						} else {
-							console.log(`Manager ${creep.name} has no buffer to extract from`);
+							//console.log(`Manager ${creep.name} has no buffer to extract from`);
 							return null;
 						}
 						if (creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0){
