@@ -131,7 +131,7 @@ export function processTasks(room: Room){
 	if (roleBaseMemory.tasks.inProgress) {
 		const isComplete = checkTaskCompletion(roleBaseMemory.tasks.inProgress, room);
 		if (isComplete) {
-			console.log(`Task ${roleBaseMemory.tasks.inProgress} Complete!`);
+			console.log(`Task ${JSON.stringify(roleBaseMemory.tasks.inProgress)} Complete!`);
 			roleBaseMemory.tasks.inProgress = null;
 		}
 	}

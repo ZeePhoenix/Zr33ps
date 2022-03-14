@@ -6,7 +6,10 @@ const buildBuffers: TaskRunner = {
 	init:(context: TaskProgressContext, room:Room)=>{
 		const sources = room.find(FIND_SOURCES);
 		for (let source of sources) {
-			buildBuffer(room, source.id);
+			if (source){
+				buildBuffer(room, source.id);
+
+			}
 		}
 	},
 	check:(context:TaskProgressContext, room:Room)=>{

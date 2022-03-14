@@ -85,8 +85,12 @@ const roleBuilder: CreepRole = {
 								const progressA = a.progressTotal - a.progress
 								const progressB = b.progressTotal - b.progress
 								return progressA - progressB;
-							})
-							context.buildingSite = buildingSites[0].id;
+							});
+							if (buildingSites.length !== 0 ){
+								context.buildingSite = buildingSites[0].id;
+							} else {
+								return null;
+							}
 						}
 						let site = Game.constructionSites[context.buildingSite]
 						if (creep.pos.getRangeTo(site) <= 3){
